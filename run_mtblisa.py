@@ -2,7 +2,7 @@ import sys
 import shutil
 
 help_text = """
-isatools.io.mtblisa
+ISA slicer - a wrapper for isatools.io.mtbls
 
 Basic usage:
     run_mtblisa.py <command> <study_id> ...
