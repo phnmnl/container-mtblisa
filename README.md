@@ -9,7 +9,7 @@ A container image definition for the mtbls module of the ISA API
 
 ## Description
 
-The ISA API is a Python 3 library that can create, manipulate, and convert ISA formatted content. The mzml2ISA tool provides the backbone of ISA-Tab metabolomics study which can then be edited with an ISA editing tool, ISAcreator.
+The ISA API is a Python 3 library that can create, manipulate, and convert ISA formatted content. The mtbls.py module provides the functionality to access MetaboLights ISA-Tab data, wrapped up as the mtblisa container.
 
 ## Key features
 
