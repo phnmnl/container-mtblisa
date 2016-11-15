@@ -62,7 +62,7 @@ elif cmd == 'GETJ':
     isajson = MTBLS.getj(study_id)
     if isajson is not None:
         import json
-        with open('out.json', 'w') as outfile:
+        with open("out.json", 'w') as outfile:
             json.dump(isajson, outfile, indent=4)
         print("ISA-JSON written to out.json")
     else:
@@ -71,7 +71,7 @@ elif cmd == 'GET_FACTORS':
     factor_names = MTBLS.get_factor_names(study_id)
     if factor_names is not None:
         import json
-        with open('out.json', 'w') as outfile:
+        with open("out.json", 'w') as outfile:
             json.dump(list(factor_names), outfile, indent=4)
         print("Factor names written to out.json")
     else:
@@ -80,7 +80,7 @@ elif cmd == 'GET_FVS':
     fvs = MTBLS.get_factor_values(study_id, sys.argv[3])
     if fvs is not None:
         import json
-        with open('out.json', 'w') as outfile:
+        with open("out.json", 'w') as outfile:
             json.dump(list(fvs), outfile, indent=4)
         print("Factor values written to out.json")
     else:
@@ -91,7 +91,7 @@ elif cmd == 'GET_DATA_FILES':
         data_files = MTBLS.get_data_files(study_id, json.loads(sys.argv[3]))
         if data_files is not None:
             import json
-            with open('out.json', 'w') as outfile:
+            with open("out.json", 'w') as outfile:
                 json.dump(data_files, outfile, indent=4)
             print("Data files written to out.json")
         else:
@@ -100,7 +100,7 @@ elif cmd == 'GET_DATA_FILES':
         data_files = MTBLS.get_data_files(study_id)
         if data_files is not None:
             import json
-            with open('out.json', 'w') as outfile:
+            with open("out.json", 'w') as outfile:
                 json.dump(data_files, outfile, indent=4)
             print("Data files written to out.json")
         else:
