@@ -1,14 +1,24 @@
 FROM ubuntu:16.04
+
+MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
+
 LABEL Description="Tools to query MetaboLights ISA-Tab"
-MAINTAINER David Johnson, david.johnson@oerc.ox.ac.uk
-RUN apt-get -y update
-RUN apt-get -y install --no-install-recommends python3-pip
-RUN pip3 install --upgrade pip
-RUN pip3 install -U setuptools
-RUN pip3 install isatools==0.3.4
+LABEL software.version="0.5.0"
+LABEL version="0.1"
+LABEL software="mtblisa"
+
+RUN apt-get update && apt-get install -y --no-install-recommends python3-pip && \
+    pip3 install --upgrade pip && \
+    pip3 install -U setuptools && \
+    pip3 install isatools==0.5.0 && \
+    apt-get purge -y python3-pip gcc libxml2-dev libxslt-dev python3-lxml && \
+    apt-get install --no-install-recommends python3 && \
+    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD run_test.sh /usr/local/bin/run_test.sh
 RUN chmod +x /usr/local/bin/run_test.sh
 
-ADD run_mtblisa.py /
-ENTRYPOINT ["python", "run_mtblisa.py"]
+ADD run_mtblisa.py /usr/local/bin/run_mtblisa.py
+RUN chmod a+x /usr/local/bin/run_mtblisa.py
+
+ENTRYPOINT ["run_mtblisa.py"]
