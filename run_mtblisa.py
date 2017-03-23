@@ -2,12 +2,14 @@
 
 import sys
 import shutil
+import argparse
+import os
 
 help_text = """
 ISA slicer - a wrapper for isatools.io.mtbls
 
 Basic usage:
-    run_mtblisa.py <command> <study_id> ...
+    run_mtblisa.py <command> <study_id> [--outpath path]
 
 To get ISA-Tab from MetaboLights:
 
@@ -41,12 +43,16 @@ eg. run_mtblisa.py GET_DATA_FILES {\"Gender\":\"Male\"}
 
 """
 
-if len(sys.argv) < 3:
-    print(help_text)
-    exit()
+parser = argparse.ArgumentParser(usage=help_text)
+parser.add_argument("command", nargs=2)
+parser.add_argument("--outpath", help="Output path  .")
+args = parser.parse_args()
 
-cmd = sys.argv[1]
-study_id = sys.argv[2]
+cmd = args.command[0]
+study_id = args.command[1]
+
+outpath = args.outpath if args.outpath else os.getcwd()
+os.chdir(outpath)
 
 try:
     from isatools.io import mtbls as MTBLS
