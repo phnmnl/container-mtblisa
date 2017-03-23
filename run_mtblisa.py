@@ -9,48 +9,50 @@ help_text = """
 ISA slicer - a wrapper for isatools.io.mtbls
 
 Basic usage:
-    run_mtblisa.py <command> <study_id> [--outpath path]
+    run_mtblisa.py --command <command> --study <study_id> [--query <query>] [--outpath path]
 
 To get ISA-Tab from MetaboLights:
 
-    run_mtblisa.py GET <study_id>
-eg. run_mtblisa.py GET MTBLS1
+    run_mtblisa.py --command GET --study <study_id>
+eg. run_mtblisa.py --command GET --study MTBLS1
     # writes ISArchive to out.zip
 
 To get ISA-JSON from MetaboLights:
 
-    run_mtblisa.py GETJ <study_id>
-eg. run_mtblisa.py GETJ MTBLS1
+    run_mtblisa.py --command GETJ --study <study_id>
+eg. run_mtblisa.py --command GETJ --study MTBLS1
     # writes ISA JSON file to out.json
 
 To get factor names from a study:
 
-    run_mtblisa.py GET_FACTORS <study_id>
-eg. run_mtblisa.py GET_FACTORS MTBLS1
+    run_mtblisa.py --command GET_FACTORS --study <study_id>
+eg. run_mtblisa.py --command GET_FACTORS --study MTBLS1
     # writes result to out.json
 
 To get factor values from a study:
 
-    run_mtblisa.py GET_FVS <study_id> <factor_name>
-eg. run_mtblisa.py GET_FVS "Gender"
+    run_mtblisa.py --command GET_FVS --study <study_id> --query <factor_name>
+eg. run_mtblisa.py --command GET_FVS --study MTBLS1 --query "Gender"
     # writes result to out.json
 
 To get data file references from a study (take care to ensure escaping of double quotes):
 
-    run_mtblisa.py GET_DATA_FILES <study_id> <factor_selection>
-eg. run_mtblisa.py GET_DATA_FILES {\"Gender\":\"Male\"}
+    run_mtblisa.py --command GET_DATA_FILES --study <study_id> --query <factor_selection>
+eg. run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query '{"Gender":"Male"}'
     # writes result to out.json
 
 """
 
 parser = argparse.ArgumentParser(usage=help_text)
-parser.add_argument("command", nargs=2)
-parser.add_argument("--outpath", help="Output path  .")
+parser.add_argument("--command", help="Command, one of GET GETJ GET_FACTORS GET_FVS GET_DATA_FILES")
+parser.add_argument("--study", help="MetaboLights study ID, e.g. MTBLS1")
+parser.add_argument("--query", help="Query on study")
+parser.add_argument("--outpath", help="Output path")
 args = parser.parse_args()
 
-cmd = args.command[0]
-study_id = args.command[1]
-
+cmd = args.command if args.command else os.getcwd()
+study_id = args.study if args.study else os.getcwd()
+query = args.query if args.query else os.getcwd()
 outpath = args.outpath if args.outpath else os.getcwd()
 os.chdir(outpath)
 
@@ -85,7 +87,7 @@ elif cmd == 'GET_FACTORS':
     else:
         print("There was an i/o problem with the ISA-Tab.")
 elif cmd == 'GET_FVS':
-    fvs = MTBLS.get_factor_values(study_id, sys.argv[3])
+    fvs = MTBLS.get_factor_values(study_id, query)
     if fvs is not None:
         import json
         with open("out.json", 'w') as outfile:
@@ -94,9 +96,9 @@ elif cmd == 'GET_FVS':
     else:
         print("There was an i/o problem with the ISA-Tab.")
 elif cmd == 'GET_DATA_FILES':
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         import json
-        data_files = MTBLS.get_data_files(study_id, json.loads(sys.argv[3]))
+        data_files = MTBLS.get_data_files(study_id, json.loads(query))
         if data_files is not None:
             import json
             with open("out.json", 'w') as outfile:
