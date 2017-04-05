@@ -123,7 +123,7 @@ elif cmd == 'GET_DATA_FILES':
         else:
             print("There was an i/o problem with the ISA-Tab.")
 elif cmd == 'GET_SUMMARY':
-    summary = MTBLS.get_variable_summary(study_id)
+    summary = MTBLS.get_study_variable_summary(study_id)
     if summary is not None:
         import json
         with open("out.json", 'w') as outfile:
