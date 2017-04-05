@@ -1,7 +1,7 @@
 ![Logo](isa-api_logo.png)
 
 # mtblisa: MetaboLights-ISA slicer
-Version: 0.7.3
+Version: 0.7.4
 
 ## Short Description
 
@@ -17,6 +17,7 @@ The ISA API is a Python 3 library that can create, manipulate, and convert ISA f
 - Query MetaboLights studies for factors used.
 - Query MetaboLights studies for factor values used for a given factor.
 - Query MetaboLights studies to retrieve data file names filtered on factor and factor value.
+- Query MetaboLights studies to retrieve a summary of variable values in the ISA tables.
 
 ## Functionality
 

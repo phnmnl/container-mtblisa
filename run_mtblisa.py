@@ -41,6 +41,13 @@ To get data file references from a study (take care to ensure escaping of double
 eg. run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query '{"Gender":"Male"}'
     # writes result to out.json
 
+To get variables summary from a study:
+
+    run_mtblisa.py --command GET_SUMMARY --study <study_id>
+eg. run_mtblisa.py --command GET_SUMMARY --study MTBLS1
+    # writes result to out.json
+
+
 """
 
 parser = argparse.ArgumentParser(usage=help_text)
@@ -115,5 +122,11 @@ elif cmd == 'GET_DATA_FILES':
             print("Data files written to out.json")
         else:
             print("There was an i/o problem with the ISA-Tab.")
+elif cmd == 'GET_SUMMARY':
+    summary = MTBLS.get_variable_summary(study_id)
+    if summary is not None:
+        import json
+        with open("out.json", 'w') as outfile:
+            json.dump(summary, outfile, indent=4)
 else:
     print(help_text)

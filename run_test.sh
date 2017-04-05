@@ -37,6 +37,13 @@ if ! [ -e "/out.json" ]; then
     fail=true
 fi
 
+# Test on GET_SUMMARY
+run_mtblisa.py --command GET_DATA_FILES --study MTBLS1
+if ! [ -e "/out.json" ]; then
+    echo "GET_SUMMARY out.json for MTBLS1 doesn't exist"
+    fail=true
+fi
+
 if $fail ; then
     echo "Errors detected!"
     exit 1
