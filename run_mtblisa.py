@@ -103,7 +103,7 @@ elif cmd == 'GET_FVS':
     else:
         print("There was an i/o problem with the ISA-Tab.")
 elif cmd == 'GET_DATA_FILES':
-    if len(sys.argv) > 3:
+    if query is not None:
         import json
         data_files = MTBLS.get_data_files(study_id, json.loads(query))
         if data_files is not None:
