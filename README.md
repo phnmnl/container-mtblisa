@@ -1,7 +1,7 @@
 ![Logo](isa-api_logo.png)
 
 # mtblisa: MetaboLights-ISA slicer
-Version: 0.7.4
+Version: 0.7.5
 
 ## Short Description
 
