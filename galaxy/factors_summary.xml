@@ -6,7 +6,7 @@
   ]]>
   </command>
   <inputs>
-    <param name="mtbls_id" type="text" label="MetaboLights Study Identifier"/>
+    <param name="mtbls_id" type="text" label="Metabolights Study Identifier"/>
   </inputs>
   <outputs>
     <data format="json" name="output" from_work_dir="out.json" label="ISA-Tab factors table in JSON format" />
