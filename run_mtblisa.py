@@ -109,7 +109,7 @@ elif cmd == 'GET_DATA_FILES':
         if data_files is not None:
             import json
             with open("out.json", 'w') as outfile:
-                json.dump(data_files, outfile, indent=4)
+                json.dump(list(data_files), outfile, indent=4)
             print("Data files written to out.json")
         else:
             print("There was an i/o problem with the ISA-Tab.")
