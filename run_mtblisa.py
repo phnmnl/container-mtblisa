@@ -106,9 +106,12 @@ elif cmd == 'GET_DATA_FILES':
     if query is not None:
         import json
         data_files = MTBLS.get_data_files(study_id, json.load(open(query)))
+        print("running with query")
+        print(data_files)
         if data_files is not None:
             import json
             with open("out.json", 'w') as outfile:
+                print("dumping data_files")
                 json.dump(list(data_files), outfile, indent=4)
             print("Data files written to out.json")
         else:
@@ -118,7 +121,7 @@ elif cmd == 'GET_DATA_FILES':
         if data_files is not None:
             import json
             with open("out.json", 'w') as outfile:
-                json.dump(data_files, outfile, indent=4)
+                json.dump(list(data_files), outfile, indent=4)
             print("Data files written to out.json")
         else:
             print("There was an i/o problem with the ISA-Tab.")
