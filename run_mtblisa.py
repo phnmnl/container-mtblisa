@@ -105,7 +105,7 @@ elif cmd == 'GET_FVS':
 elif cmd == 'GET_DATA_FILES':
     if query is not None:
         import json
-        data_files = MTBLS.get_data_files(study_id, json.loads(query))
+        data_files = MTBLS.get_data_files(study_id, json.load(open(query)))
         if data_files is not None:
             import json
             with open("out.json", 'w') as outfile:
