@@ -32,6 +32,10 @@ fi
 
 # Test on GET_DATA_FILES
 run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query /query.json
+if [ -e "/out.json" ]; then
+    cat /out.json
+fi
+
 if ! [ -e "/out.json" ]; then
     echo "GET_DATA_FILES out.json for MTBLS1 doesn't exist"
     fail=true
