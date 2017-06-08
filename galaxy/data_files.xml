@@ -3,7 +3,7 @@
   <description>Get a MetaboLights study data files list</description>
   <command><![CDATA[
     echo "{ \"$factor_name\": \"$factor_value\" }" > query.json
-    run_mtblisa.py --command GET_DATA_FILES --study $mtbls_id --query /query.json
+    run_mtblisa.py --command GET_DATA_FILES --study $mtbls_id --query query.json
   ]]>
   </command>
   <inputs>
