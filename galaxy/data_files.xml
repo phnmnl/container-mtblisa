@@ -7,8 +7,6 @@
   </command>
   <inputs>
     <param name="mtbls_id" type="text" label="Metabolights Study Identifier"/>
-  </inputs>
-  <inputs>
     <param name="query" type="text" label="Query JSON filtering on factor and factor value"/>
   </inputs>
   <outputs>
