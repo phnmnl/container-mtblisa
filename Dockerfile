@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends python3-pip pyt
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD run_test.sh /usr/local/bin/run_test.sh
-ADD test_query.json /query.json
+ADD test_query.json /test_query.json
 RUN chmod +x /usr/local/bin/run_test.sh
 
 ADD run_mtblisa.py /usr/local/bin/run_mtblisa.py

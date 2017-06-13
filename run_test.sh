@@ -31,9 +31,10 @@ if ! [ -e "/out.json" ]; then
 fi
 
 # Test on GET_DATA_FILES
-run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query /query.json
+run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query /test_query.json
 if [ -e "/out.json" ]; then
-    cat /out.json
+    echo "GET_DATA_FILES out.json for MTBLS1 test query doesn't exist"
+    fail=true
 fi
 
 if ! [ -e "/out.json" ]; then
