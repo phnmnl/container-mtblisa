@@ -38,7 +38,7 @@ eg. run_mtblisa.py --command GET_FVS --study MTBLS1 --query "Gender"
 To get data file references from a study (take care to ensure escaping of double quotes):
 
     run_mtblisa.py --command GET_DATA_FILES --study <study_id> --query <factor_selection>
-eg. run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query '{"Gender":"Male"}'
+eg. run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query /query.json '{"Gender":"Male"}'
     # writes result to out.json
 
 To get variables summary from a study:
