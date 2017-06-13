@@ -58,8 +58,8 @@ parser.add_argument("--outpath", help="Output path")
 args = parser.parse_args()
 
 cmd = args.command if args.command else os.getcwd()
-study_id = args.study if args.study else os.getcwd()
-query = args.query if args.query else os.getcwd()
+study_id = args.study if args.study else ""
+query = args.query if args.query else "/query.json"
 outpath = args.outpath if args.outpath else os.getcwd()
 os.chdir(outpath)
 
@@ -105,17 +105,18 @@ elif cmd == 'GET_FVS':
 elif cmd == 'GET_DATA_FILES':
     if query is not None:
         import json
-        data_files = MTBLS.get_data_files(study_id, json.load(open(query)))
-        print("running with query")
-        print(data_files)
-        if data_files is not None:
-            import json
-            with open("out.json", 'w') as outfile:
-                print("dumping data_files")
-                json.dump(list(data_files), outfile, indent=4)
-            print("Data files written to out.json")
-        else:
-            print("There was an i/o problem with the ISA-Tab.")
+        with open(query, encoding='utf-8') as query_fp:
+            data_files = MTBLS.get_data_files(study_id, json.load(query_fp))
+            print("running with query")
+            print(data_files)
+            if data_files is not None:
+                import json
+                with open("out.json", 'w') as outfile:
+                    print("dumping data_files")
+                    json.dump(list(data_files), outfile, indent=4)
+                print("Data files written to out.json")
+            else:
+                print("There was an i/o problem with the ISA-Tab.")
     else:
         data_files = MTBLS.get_data_files(study_id)
         if data_files is not None:
