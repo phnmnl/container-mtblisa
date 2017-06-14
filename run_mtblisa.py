@@ -106,9 +106,10 @@ elif cmd == 'GET_DATA_FILES':
     if query is not None:
         import json
         with open(query, encoding='utf-8') as query_fp:
-            data_files = MTBLS.get_data_files(study_id, json.load(query_fp))
-            print("running with query")
-            print(data_files)
+            json_query = json.load(query_fp)
+            print("running with query: {}".format(json_query))
+            data_files = MTBLS.get_data_files(study_id, json_query)
+            print("Result data files list: {}".format(data_files))
             if data_files is not None:
                 import json
                 with open("out.json", 'w') as outfile:
