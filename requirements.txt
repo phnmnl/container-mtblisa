@@ -1,1 +1,1 @@
-isatools=0.7.5
+isatools=0.8.2
