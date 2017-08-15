@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
-LABEL software.version="0.8.2"
+LABEL software.version="0.8.3"
 LABEL version="0.5"
 LABEL software="mtblisa"
 
