@@ -1,15 +1,15 @@
 ![Logo](isa-api_logo.png)
 
 # mtblisa: MetaboLights-ISA slicer
-Version: 0.7.5
+Version: 0.8.2
 
 ## Short Description
 
-A container image definition for the mtbls module of the ISA API
+A container the `mtbls` module of the [ISA-API](http://github.com/ISA-tools/isa-api)
 
 ## Description
 
-The ISA API is a Python 3 library that can create, manipulate, and convert ISA formatted content. The mtbls.py module provides the functionality to access MetaboLights ISA-Tab data, wrapped up as the mtblisa container.
+The ISA-API is a Python 3 library that can create, manipulate, and convert ISA-formatted content. The `isatools.io.mtbls` module provides the functionality to access MetaboLights ISA-Tab data, wrapped up as the `container-mtblisa` container.
 
 ## Key features
 
@@ -22,10 +22,6 @@ The ISA API is a Python 3 library that can create, manipulate, and convert ISA f
 ## Functionality
 
 - Other Tools
-
-## Approaches
-  
-## Instrument Data Types
 
 ## Tool Authors
 
@@ -54,14 +50,50 @@ docker pull docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa
 
 ## Usage Instructions
 
-For direct docker usage:
+### For direct docker usage
+
+Basic usage:
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command <command> --study <study_id> [--query <query>] [--outpath path]
+```
+
+To get ISA-Tab from MetaboLights:
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GET --study <study_id>
+```
+
+To get ISA-JSON from MetaboLights:
 
 ```bash
-docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa ...
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GETJ --study <study_id>
+```
+
+To get factor names from a study:
+
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GET_FACTORS --study <study_id>
+```
+
+To get factor values from a study:
+
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GET_FVS --study <study_id> --query <factor_name>
+```
+
+To get data file references from a study (take care to ensure escaping of double quotes):
+
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GET_DATA_FILES --study <study_id> --query <factor_selection>
+```
+
+To get variables summary from a study:
+
+```bash
+docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa --command GET_SUMMARY --study <study_id>
 ```
 
 ## Publications
 
-- Haug, K., Salek, R. M., Conesa, P., Hastings, J., de Matos, P., Rijnbeek, M., ... & Maguire, E. (2012). MetaboLights—an open-access general-purpose repository for metabolomics studies and associated meta-data. Nucleic acids research, gks1004.
-
-- Sansone, Susanna-Assunta, Rocca-Serra, Philippe, Gonzalez-Beltran, Alejandra, Johnson, David, & ISA Community. (2016, October 28). ISA Model and Serialization Specifications 1.0. Zenodo. http://doi.org/10.5281/zenodo.163640
+- Haug, K., Salek, R. M., Conesa, P., Hastings, J., de Matos, P., Rijnbeek, M., ... & Maguire, E. (2012). MetaboLights - an open-access general-purpose repository for metabolomics studies and associated meta-data. Nucleic acids research, gks1004.
+- Sansone, Susanna-Assunta, Rocca-Serra, Philippe, Gonzalez-Beltran, Alejandra, Johnson, David, &amp; ISA Community. (2016, October 28). ISA Model and Serialization Specifications 1.0. Zenodo. http://doi.org/10.5281/zenodo.163640
+- Sansone, Susanna-Assunta, et al. (2012, January 27). Towards interoperable bioscience data. Nature Genetics 44, 121–126. http://doi.org/10.1038/ng.1054
