@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <tool id="get_study" name="get_study" version="1.0">
-  <description>Get an ISA-Tab ZIP archive from MetaboLights</description>
+  <description>Get an ISA-Tab archive (zip) from MetaboLights</description>
   <command><![CDATA[
     run_mtblisa.py --command GET --study $mtbls_id
   ]]>
