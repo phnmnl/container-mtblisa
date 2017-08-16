@@ -12,7 +12,7 @@
     <param name="factor_value" type="text" label="Factor value to filter on." help="Factor value relevant to the specified MetaboLights study, e.g. cyp79."/>
   </inputs>
   <outputs>
-    <data format="json" name="output" from_work_dir="out.json" label="List of data files and related sample names as JSON." />
+    <data format="json" name="output" from_work_dir="out.json" label="$(mtbls_id) sliced data files list" />
   </outputs>
 
   <help>
