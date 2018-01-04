@@ -64,7 +64,7 @@ outpath = args.outpath if args.outpath else os.getcwd()
 os.chdir(outpath)
 
 try:
-    from isatools.io import mtbls as MTBLS
+    from isatools.net import mtbls as MTBLS
 except ImportError as e:
     raise RuntimeError("Could not import isatools.io.mtbls package")
 if cmd == 'GET':
