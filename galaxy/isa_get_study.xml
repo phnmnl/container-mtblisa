@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tool id="isa_get_study" name="Get an ISA study" version="1.0">
+    <description>Get an ISA dataset from MetaboLights</description>
+    <command><![CDATA[
+        run_mtblisa.py get-study "${mtbls_id}" "${output.extra_files_path}" --isa-format ${isa_format} 
+    ]]></command>
+    <inputs>
+        <param name="mtbls_id" type="text" label="Metabolights Study Identifier"/>
+        <param name="isa_format" type="select" label="ISA type">
+          <option value="isa-tab" selected="true">ISA-TAB</option>
+          <option value="isa-json">ISA-JSON</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data format="isa" name="output"/>
+    </outputs>
+    <stdio>
+      <exit_code range="1:" level="fatal"/>
+    </stdio>
+
+
+  <help>
+<!-- @@@BEGIN_RST@@@ -->
+
+==============================================
+Get ISA data from MetaboLights
+==============================================
+
+This tool downloads ISA content from MetaboLights.  You can select
+whether to generate an ISA-TAB (the default) or an ISA-JSON dataset.
+
+-----
+Input
+-----
+
+MetaboLights Study Identifier
+=============================
+MTBLS ID available at MetaboLights, e.g. MTBLS2.
+
+------
+Output
+------
+
+ISA content in ISA-JSON format
+==============================
+
+A single JSON file containing the ISA-Tab contents in *ISA-JSON* compliant format.
+
+For details on the ISA-JSON format, please see http://isa-specs.readthedocs.io/en/latest/isajson.html
+
+
+<!-- @@@END_RST@@@ -->
+  </help>
+
+  <citations>
+    <citation type="doi">10.1093/nar/gks1004</citation>
+    <citation type="doi">10.5281/zenodo.163640</citation>
+    <citation type="doi">10.1038/ng.1054</citation>
+  </citations>
+
+</tool>

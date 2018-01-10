@@ -1,52 +1,45 @@
 #!/bin/bash
 
-fail=false
 
-# Test on GET
-run_mtblisa.py --command GET --study MTBLS1
-if ! [ -e "/out.zip" ]; then
-	echo "GET out.zip for MTBLS1 doesn't exist"
-    fail=true
+my_path="$(readlink -f "${0}")"
+my_dir="$(dirname "${my_path}")"
+
+
+function log() {
+    echo "${@}" >&2
+}
+
+set -x
+
+have_failures=false
+
+"${my_dir}/run_tests.py" || have_failures=true
+
+# check correctly reported parsing errors
+run_mtblisa.py get-my-error ${TestStudy} out --format zip
+exit_code=$?
+if [[ $exit_code = 0 ]]; then
+    log "Failed to report bad subcommand name"
+    have_failures=true
 fi
 
-# Test on GETJ
-run_mtblisa.py --command GETJ --study MTBLS1
-if ! [ -e "/out.json" ]; then
-    echo "GETJ out.json for MTBLS1 doesn't exist"
-    fail=true
+run_mtblisa.py get-study IDontExist out
+exit_code=$?
+if [[ $exit_code = 0 ]]; then
+    log "Failed to report bad study id"
+    have_failures=true
 fi
 
-# Test on GET_FACTORS
-run_mtblisa.py --command GET_FACTORS --study MTBLS1
-if ! [ -e "/out.json" ]; then
-    echo "GET_FACTORS out.json for MTBLS1 doesn't exist"
-    fail=true
+run_mtblisa.py get-study
+exit_code=$?
+if [[ $exit_code = 0 ]]; then
+    log "Failed to report bad usage"
+    have_failures=true
 fi
 
-# Test on GET_FVS
-run_mtblisa.py --command GET_FVS --study MTBLS1 --query Gender
-if ! [ -e "/out.json" ]; then
-    echo "GET_FVS out.json for MTBLS1 doesn't exist"
-    fail=true
-fi
-
-# Test on GET_DATA_FILES
-run_mtblisa.py --command GET_DATA_FILES --study MTBLS1 --query /test_query.json
-if ! [ -e "/out.json" ]; then
-    echo "GET_DATA_FILES out.json for MTBLS1 doesn't exist"
-    fail=true
-fi
-
-# Test on GET_SUMMARY
-run_mtblisa.py --command GET_SUMMARY --study MTBLS1
-if ! [ -e "/out.json" ]; then
-    echo "GET_SUMMARY out.json for MTBLS1 doesn't exist"
-    fail=true
-fi
-
-if $fail ; then
-    echo "Errors detected!"
+if [[ $have_failures = true ]]; then
+    log "Errors detected!"
     exit 1
+else
+    log "All files created successfully"
 fi
-
-echo "All files created successfully"
