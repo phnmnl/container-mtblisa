@@ -14,7 +14,7 @@ LABEL software="mtblisa"
 RUN echo "Installing software" >&2 \
     && apk add --no-cache python3 bash \
     && apk add --no-cache --virtual mtblisa-build-deps ca-certificates g++ python3-dev libxml2-dev libxslt-dev \
-    && pip3 install isatools==0.8.2 argparse==1.4.0 \
+    && pip3 install isatools==0.9.4 argparse==1.4.0 \
     && apk del mtblisa-build-deps \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/* /var/tmp/*
