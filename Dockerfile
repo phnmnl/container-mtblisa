@@ -1,4 +1,4 @@
-FROM isatools/isatools:3.6-slim-stretch-0.9.4
+FROM isatools/isatools:3.6-alpine-0.9.4
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
