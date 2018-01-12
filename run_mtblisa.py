@@ -6,35 +6,18 @@ import argparse
 import os
 import logging
 
-from importlib import import_module
+from isatools.net import mtbls as MTBLS
 
 logger = None
 
 #    run_mtblisa.py <command> <study_id> [ command-specific options ]
 
-MTBLS = None  # pointer to isatools mtbls module
-
-def import_mtbls():
-    global MTBLS
-    packages = ("isatools.net.mtbls", "isatools.io.mtbls")
-    for package_name in packages:
-        try:
-            if MTBLS is None:
-                MTBLS = import_module(package_name)
-            break
-        except ImportError:
-            pass
-    if MTBLS is None:
-        raise ImportError("Failed to import both {} packages".format(' and '.join(packages)))
-
-# Import isatools mtbls library
-import_mtbls()
-
-
 def make_parser():
-    parser = argparse.ArgumentParser(description="ISA slicer - a wrapper for isatools.io.mtbls")
+    parser = argparse.ArgumentParser(
+        description="ISA slicer - a wrapper for isatools.io.mtbls")
 
-    parser.add_argument('--log-level', choices=['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'],
+    parser.add_argument('--log-level', choices=[
+        'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'],
                         default='INFO', help="Set the desired logging level")
 
     subparsers = parser.add_subparsers(
@@ -42,36 +25,47 @@ def make_parser():
         dest='command') # specified subcommand will be available in attribute 'command'
     subparsers.required = True
 
-    subparser = subparsers.add_parser('get-study-archive', aliases=['gsa'],
-                                      help="Get ISA study from MetaboLights as zip archive")
+    subparser = subparsers.add_parser(
+        'get-study-archive', aliases=['gsa'],
+        help="Get ISA study from MetaboLights as zip archive")
     subparser.set_defaults(func=get_study_archive_command)
     subparser.add_argument('study_id')
-    subparser.add_argument('output', metavar="OUTPUT", help="Name of output archive (extension will be added)")
-    subparser.add_argument('--format', metavar="FMT", choices=['zip', 'tar', 'gztar', 'bztar', 'xztar'],
-                           default='zip', help="Type of archive to create")
+    subparser.add_argument(
+        'output', metavar="OUTPUT",
+        help="Name of output archive (extension will be added)")
+    subparser.add_argument('--format', metavar="FMT", choices=[
+        'zip', 'tar', 'gztar', 'bztar', 'xztar'], default='zip',
+                           help="Type of archive to create")
 
     subparser = subparsers.add_parser('get-study', aliases=['gs'],
                                       help="Get ISA study from MetaboLights")
     subparser.set_defaults(func=get_study_command)
     subparser.add_argument('study_id')
     subparser.add_argument('output', metavar="PATH", help="Name of output")
-    subparser.add_argument('-f', '--isa-format', choices=['isa-tab', 'isa-json'], metavar="FORMAT", default='isa-tab',
-                           help="Desired ISA format")
+    subparser.add_argument(
+        '-f', '--isa-format', choices=['isa-tab', 'isa-json'],
+        metavar="FORMAT", default='isa-tab', help="Desired ISA format")
 
-    subparser = subparsers.add_parser('get-factors', aliases=['gf'],
-                                      help="Get factor names from a study in json format")
+    subparser = subparsers.add_parser(
+        'get-factors', aliases=['gf'],
+        help="Get factor names from a study in json format")
     subparser.set_defaults(func=get_factors_command)
     subparser.add_argument('study_id')
-    subparser.add_argument('output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                           help="Output file")
+    subparser.add_argument(
+        'output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+        help="Output file")
 
-    subparser = subparsers.add_parser('get-factor-values', aliases=['gfv'],
-                                      help="Get factor values from a study in json format")
+    subparser = subparsers.add_parser(
+        'get-factor-values', aliases=['gfv'],
+        help="Get factor values from a study in json format")
     subparser.set_defaults(func=get_factor_values_command)
     subparser.add_argument('study_id')
-    subparser.add_argument('factor', help="The desired factor. Use `get-factors` to get the list of available factors")
-    subparser.add_argument('output',nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                           help="Output file")
+    subparser.add_argument(
+        'factor', help="The desired factor. Use `get-factors` to get the list "
+                       "of available factors")
+    subparser.add_argument(
+        'output',nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+        help="Output file")
 
     subparser = subparsers.add_parser('get-data', aliases=['gd'],
                                       help="Get data files in json format")
@@ -80,14 +74,18 @@ def make_parser():
     subparser.add_argument('output',nargs='?', type=argparse.FileType('w'), default=sys.stdout,
                            help="Output file")
 
-    subparser.add_argument('--json-query', help="Factor query in JSON (e.g., '{\"Gender\":\"Male\"}'")
+    subparser.add_argument(
+        '--json-query',
+        help="Factor query in JSON (e.g., '{\"Gender\":\"Male\"}'")
 
-    subparser = subparsers.add_parser('get-summary', aliases=['gsum'],
-                                      help="Get the variables summary from a study, in json format")
+    subparser = subparsers.add_parser(
+        'get-summary', aliases=['gsum'],
+        help="Get the variables summary from a study, in json format")
     subparser.set_defaults(func=get_summary_command)
     subparser.add_argument('study_id')
-    subparser.add_argument('output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                           help="Output file")
+    subparser.add_argument(
+        'output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+        help="Output file")
 
     return parser
 
@@ -102,7 +100,8 @@ def get_study_archive_command(options):
     logger.debug("MTBLS.get returned '%s'", tmpdir)
     if tmpdir is not None:
         try:
-            shutil.make_archive(options.output, options.format, tmpdir, logger=logger)
+            shutil.make_archive(
+                options.output, options.format, tmpdir, logger=logger)
             logger.info("ISA archive written")
         finally:
             logger.debug("Trying to clean up tmp dir %s", tmpdir)
@@ -112,7 +111,8 @@ def get_study_archive_command(options):
 
 def get_study_command(options):
     if os.path.exists(options.output):
-        raise RuntimeError("Selected output path {} already exists!".format(options.output))
+        raise RuntimeError("Selected output path {} already exists!".format(
+            options.output))
 
     if options.isa_format == "isa-tab":
         tmp_data = None
@@ -122,7 +122,9 @@ def get_study_command(options):
             if tmp_data is None:
                 raise RuntimeError("Error downloading ISA study")
 
-            logger.debug("Finished downloading data.  Moving to final location %s", options.output)
+            logger.debug(
+                "Finished downloading data. Moving to final location %s",
+                options.output)
             shutil.move(tmp_data, options.output)
             logger.info("ISA archive written to %s", options.output)
         finally:
@@ -136,19 +138,24 @@ def get_study_command(options):
         if isajson is None:
             raise RuntimeError("Error downloading ISA study")
 
-        logger.debug("Finished downloading data.  Dumping json to final location %s", options.output)
+        logger.debug(
+            "Finished downloading data. Dumping json to final location %s",
+            options.output)
         os.makedirs(options.output)
-        json_file = os.path.join(options.output, "{}.json".format(isajson['identifier']))
+        json_file = os.path.join(options.output, "{}.json".format(
+            isajson['identifier']))
         with open(json_file, 'w') as fd:
             json.dump(isajson, fd)
         logger.info("ISA-JSON written to %s", options.output)
     else:
-        raise ValueError("BUG! Got an invalid isa format '{}'".format(options.isa_format))
+        raise ValueError("BUG! Got an invalid isa format '{}'".format(
+            options.isa_format))
 
 def get_factors_command(options):
     import json
 
-    logger.info("Getting factors for study %s. Writing to %s.", options.study_id, options.output.name)
+    logger.info("Getting factors for study %s. Writing to %s.",
+                options.study_id, options.output.name)
     factor_names = MTBLS.get_factor_names(options.study_id)
 
     if factor_names is not None:
@@ -159,8 +166,8 @@ def get_factors_command(options):
 
 def get_factor_values_command(options):
     import json
-    logger.info("Getting values for factor %s in study %s. Writing to %s.", options.factor,
-                options.study_id, options.output.name)
+    logger.info("Getting values for factor %s in study %s. Writing to %s.",
+                options.factor, options.study_id, options.output.name)
 
     fvs = MTBLS.get_factor_values(options.study_id, options.factor)
     if fvs is not None:
@@ -171,7 +178,8 @@ def get_factor_values_command(options):
 
 def get_data_files_command(options):
     import json
-    logger.info("Getting data files for study %s. Writing to %s.", options.study_id, options.output.name)
+    logger.info("Getting data files for study %s. Writing to %s.",
+                options.study_id, options.output.name)
     if options.json_query:
         logger.debug("This is the specified query:\n%s", options.json_query)
     else:
@@ -194,7 +202,8 @@ def get_data_files_command(options):
 
 def get_summary_command(options):
     import json
-    logger.info("Getting summary for study %s. Writing to %s.", options.study_id, options.output.name)
+    logger.info("Getting summary for study %s. Writing to %s.",
+                options.study_id, options.output.name)
 
     summary = MTBLS.get_study_variable_summary(options.study_id)
     if summary is not None:
@@ -228,10 +237,13 @@ def main(args):
     _configure_logger(options)
 
     if not options.study_id.startswith('MTBLS'):
-        logger.warning("The study id %s doesn't look like a valid Metabolights id", options.study_id)
+        logger.warning(
+            "The study id %s doesn't look like a valid Metabolights id",
+            options.study_id)
 
     # run subcommand
     options.func(options)
+
 
 if __name__ == '__main__':
     try:
