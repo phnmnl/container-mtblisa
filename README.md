@@ -19,9 +19,19 @@ The ISA-API is a Python 3 library that can create, manipulate, and convert ISA-f
 - Query MetaboLights studies to retrieve data file names filtered on factor and factor value.
 - Query MetaboLights studies to retrieve a summary of variable values in the ISA tables.
 
+
 ## Functionality
 
-- Other Tools
+- Data Management / Study Metadata Querying
+
+## Approaches
+
+- Metabolomics
+- Isotopic Labelling Analysis
+  
+## Instrument Data Types
+- MS
+- NMR
 
 ## Tool Authors
 
@@ -30,6 +40,7 @@ The ISA-API is a Python 3 library that can create, manipulate, and convert ISA-f
 ## Container Contributors
 
 - [David Johnson](https://github.com/djcomlab) (University of Oxford)
+- [Philippe Rocca-Serra](https://github.com/proccaserra) (University of Oxford)
 
 ## Website
 
