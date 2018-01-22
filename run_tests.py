@@ -17,6 +17,7 @@ logger = logging.getLogger("test_logger")
 # a valid study ID from the Metabolights database
 _STUDY = "MTBLS9"
 
+
 class MtblsIsaTests(unittest.TestCase):
     def _assert_not_empty_folder(self, result):
         self.assertIsNotNone(result, "Empty output path")
@@ -113,7 +114,8 @@ class MtblsIsaTests(unittest.TestCase):
 
 def parse_args(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--log-level', choices=['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'],
+    parser.add_argument('--log-level', choices=[
+        'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'],
                         default='INFO', help="Set the desired logging level")
     parser.add_argument('--fail-fast', default=False, action='store_true')
 
@@ -131,8 +133,10 @@ def main(args=None):
 
     # configure and run tests
     suite = unittest.TestLoader().loadTestsFromTestCase(MtblsIsaTests)
-    result = unittest.TextTestRunner(verbosity=2, failfast=opts.fail_fast).run(suite)
+    result = unittest.TextTestRunner(
+        verbosity=2, failfast=opts.fail_fast).run(suite)
     return result.wasSuccessful()
+
 
 if __name__ == '__main__':
     success = main()
