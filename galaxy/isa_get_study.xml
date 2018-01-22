@@ -6,12 +6,10 @@
     ]]></command>
     <inputs>
         <param name="mtbls_id" type="text" label="Metabolights Study Identifier"/>
-        <!--
-        <param name="output_format" type="select" label="Output ISA type">
+        <param name="isa_format" type="select" label="Output ISA type">
           <option value="isa-tab" selected="true">ISA-TAB</option>
-          <option value="isa-json">ISA-JSON</option>
+          <!--<option value="isa-json">ISA-JSON</option>-->
         </param>
-        -->
     </inputs>
     <outputs>
         <!-- default output format:  isa-tab.  When selector list `isa_format` is set to
