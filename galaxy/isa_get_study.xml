@@ -39,8 +39,7 @@
 Get ISA data from MetaboLights
 ==============================================
 
-This tool downloads ISA content from MetaboLights.  You can select
-whether to generate an ISA-TAB (the default) or an ISA-JSON dataset.
+This tool downloads ISA content from MetaboLights in ISA-Tab format.
 
 -----
 Input
@@ -54,12 +53,12 @@ MTBLS ID available at MetaboLights, e.g. MTBLS2.
 Output
 ------
 
-ISA content in ISA-JSON format
+ISA content in ISA-Tab format
 ==============================
 
-A single JSON file containing the ISA-Tab contents in *ISA-JSON* compliant format.
+A dataset in ISA-Tab format.
 
-For details on the ISA-JSON format, please see http://isa-specs.readthedocs.io/en/latest/isajson.html
+For details on the ISA-Tab format, please see http://isa-specs.readthedocs.io/en/latest/isatab.html.
 
 
 <!-- @@@END_RST@@@ -->
