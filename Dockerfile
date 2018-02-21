@@ -17,15 +17,12 @@ RUN apk add --no-cache --virtual git-deps git openssh \
 
 ENV PATH=$PATH:/files/galaxy
 
-ADD /files/galaxy/tools/isa_slicer/run_test.sh /usr/local/bin/run_test.sh
-ADD /files/galaxy/tools/isa_slicer/run_test.py /usr/local/bin/run_test.py
+ADD run_test.sh /usr/local/bin/run_test.sh
+ADD run_test.py /usr/local/bin/run_test.py
+ADD /files/galaxy/tools/isa_slicer/run_mtblisa.py /usr/local/bin/run_mtblisa.py
 RUN chmod a+rx \
   /usr/local/bin/run_mtblisa.py \
   /usr/local/bin/run_test.sh \
   /usr/local/bin/run_tests.py
-
-
-RUN cp /files/galaxy/tools/isa_slicer/run_mtblisa.py /usr/local/bin/run_mtblisa.py
-RUN chmod a+x /usr/local/bin/run_mtblisa.py
 
 ENTRYPOINT ["run_mtblisa.py"]
