@@ -10,7 +10,7 @@ LABEL software="mtblisa"
 WORKDIR /mtblisa
 
 RUN apk add --no-cache --virtual git-deps git openssh \
-    && git clone --depth 1 --single-branch -b feature/integrate_all_tools https://github.com/ISA-tools/isatools-galaxy /files/galaxy \
+    && git clone --depth 1 --single-branch -b develop https://github.com/ISA-tools/isatools-galaxy /files/galaxy \
     && apk del git-deps \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/* /var/tmp/*
