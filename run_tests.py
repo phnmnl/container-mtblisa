@@ -122,6 +122,75 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
+class IsaSlicerTests(unittest.TestCase):
+
+    _STUDY_PATH = "/files/galaxy/tools/slicer/test-data/MTBLS1/"
+
+    def _assert_not_empty_folder(self, result):
+        self.assertIsNotNone(result, "Empty output path")
+        self.assertTrue(os.path.isdir(result) > 0, "Output path is not a folder")
+        self.assertTrue(len(os.listdir(result)) > 0, "Output path is empty")
+        logger.debug("Output path: %s", result)
+
+    def _assert_not_empty_json_data(self, result):
+        # check result is not empty
+        self.assertTrue(os.path.isfile(result))
+        with open(result) as fd:
+            loaded_json = json.load(fd)
+            self.assertGreater(len(loaded_json), 0)
+
+    def _clean_output(self, path):
+        # remove the output path
+        if os.path.isdir(path):
+            shutil.rmtree(path, ignore_errors=True)
+        elif os.path.exists(path):
+            os.remove(path)
+        if os.path.exists(path):
+            logger.error("Error when cleaning the output path %s", path)
+
+    def _make_tmp_name(self):
+        return os.path.join(
+            tempfile.gettempdir(),
+            "run_mtblisa_test.{:05d}".format(random.randrange(10000)))
+
+    def test_datatype_get_factors(self):
+        rand_name = self._make_tmp_name()
+        args = ['datatype-get-factors', self._STUDY_PATH, rand_name]
+        try:
+            run_mtblisa.main(args)
+            self._assert_not_empty_json_data(rand_name)
+        finally:
+            self._clean_output(rand_name)
+
+    def test_datatype_get_factor_values_queries(self):
+        rand_name = self._make_tmp_name()
+        args = ['datatype-get-factor-values', self._STUDY_PATH, "Gender", rand_name]
+        try:
+            run_mtblisa.main(args)
+            self._assert_not_empty_json_data(rand_name)
+        finally:
+            self._clean_output(rand_name)
+
+    def test_datatype_get_summary(self):
+        rand_name = self._make_tmp_name()
+        args = ['datatype-get-summary', self._STUDY_PATH, rand_name]
+        try:
+            run_mtblisa.main(args)
+            self._assert_not_empty_json_data(rand_name)
+        finally:
+            self._clean_output(rand_name)
+
+    def test_datatype_get_data_files_with_queries(self):
+        rand_name = self._make_tmp_name()
+        args = ['datatype-get-data', self._STUDY_PATH, rand_name, '--json-query',
+                '{"Gender":"Male"}']
+        try:
+            run_mtblisa.main(args)
+            self._assert_not_empty_json_data(rand_name)
+        finally:
+            self._clean_output(rand_name)
+
+
 def main(args=None):
     if args is None:
         args = sys.argv[1:]
@@ -132,10 +201,16 @@ def main(args=None):
     logger.setLevel(logging_level)
 
     # configure and run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(MtblsIsaTests)
-    result = unittest.TextTestRunner(
-        verbosity=2, failfast=opts.fail_fast).run(suite)
-    return result.wasSuccessful()
+    suite1 = unittest.TestLoader().loadTestsFromTestCase(MtblsIsaTests)
+    result1 = unittest.TextTestRunner(
+        verbosity=2, failfast=opts.fail_fast).run(suite1)
+
+    # configure and run tests
+    suite2 = unittest.TestLoader().loadTestsFromTestCase(IsaSlicerTests)
+    result2 = unittest.TextTestRunner(
+        verbosity=2, failfast=opts.fail_fast).run(suite2)
+
+    return result1.wasSuccessful() == result2.wasSuccessful()
 
 
 if __name__ == '__main__':
