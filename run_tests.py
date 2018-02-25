@@ -173,7 +173,7 @@ class IsaSlicerTests(unittest.TestCase):
 
     def test_datatype_get_summary(self):
         rand_name = self._make_tmp_name()
-        args = ['datatype-get-summary', self._STUDY_PATH, rand_name]
+        args = ['datatype-get-factors-summary', self._STUDY_PATH, rand_name]
         try:
             run_mtblisa.main(args)
             self._assert_not_empty_json_data(rand_name)
