@@ -75,6 +75,9 @@ docker pull docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa
 
 ## Usage Instructions
 
+Available on PhenoMeNal Galaxy instances under PhenoMeNal H2020 Tools -> Study Metadata Exploration
+
+
 ### For direct docker usage
 
 Basic usage:
