@@ -79,9 +79,8 @@ docker pull docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa
 
 Basic usage:
 ```bash
-docker run $PWD:/data docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa /data/isatab_files/
+docker run $PWD:/data docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa <command>
 
-docker run docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa <command>
 ```
 
 ## Publications
