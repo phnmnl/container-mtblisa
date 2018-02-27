@@ -23,14 +23,14 @@ if [[ $exit_code = 0 ]]; then
     have_failures=true
 fi
 
-run_mtblisa.py get-study IDontExist out
+run_mtblisa.py mtbls-get-study IDontExist out
 exit_code=$?
 if [[ $exit_code = 0 ]]; then
     log "Failed to report bad study id"
     have_failures=true
 fi
 
-run_mtblisa.py get-study
+run_mtblisa.py mtbls-get-study
 exit_code=$?
 if [[ $exit_code = 0 ]]; then
     log "Failed to report bad usage"
