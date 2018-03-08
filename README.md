@@ -82,7 +82,7 @@ Available on PhenoMeNal Galaxy instances under PhenoMeNal H2020 Tools -> Study M
 
 Basic usage:
 ```bash
-docker run $PWD:/data docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa <command>
+docker run -v $PWD:/data docker-registry.phenomenal-h2020.eu/phnmnl/mtblisa <command>
 
 ```
 
