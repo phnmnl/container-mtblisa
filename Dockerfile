@@ -4,13 +4,13 @@ MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
 LABEL software.version="0.9.5"
-LABEL version="0.6.7"
+LABEL version="0.6.8"
 LABEL software="mtblisa"
 
 WORKDIR /mtblisa
 
 RUN apk add --no-cache --virtual git-deps git openssh \
-    && git clone --depth 1 --single-branch -b 0.1-cbln1 https://github.com/ISA-tools/isatools-galaxy /files/galaxy \
+    && git clone --depth 1 --single-branch -b phenomenal https://github.com/ISA-tools/isatools-galaxy /files/galaxy \
     && apk del git-deps \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/* /var/tmp/*
