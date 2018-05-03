@@ -9,7 +9,7 @@ import shutil
 import sys
 import tempfile
 import unittest
-import run_mtblisa
+import isaslicer
 
 # create a logger instance
 logger = logging.getLogger("test_logger")
@@ -44,13 +44,13 @@ class MtblsIsaTests(unittest.TestCase):
     def _make_tmp_name(self):
         return os.path.join(
             tempfile.gettempdir(),
-            "run_mtblisa_test.{:05d}".format(random.randrange(10000)))
+            "isaslicer_test.{:05d}".format(random.randrange(10000)))
 
     def test_get_study_tab(self):
         rand_name = self._make_tmp_name()
         args = ['mtbls-get-study', _STUDY, '--isa-format', "isa-tab", rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_folder(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -59,7 +59,7 @@ class MtblsIsaTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['mtbls-get-study', _STUDY, '--isa-format', "isa-json", rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_folder(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -68,7 +68,7 @@ class MtblsIsaTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['mtbls-get-factors', _STUDY, rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -77,7 +77,7 @@ class MtblsIsaTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['mtbls-get-factor-values', _STUDY, "Compound", rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -86,7 +86,7 @@ class MtblsIsaTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['mtbls-get-factors-summary', _STUDY, rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -96,7 +96,7 @@ class MtblsIsaTests(unittest.TestCase):
         args = ['mtbls-get-data-list', _STUDY, rand_name, '--json-query',
                 '{"Compound":"control 1"}']
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -107,7 +107,7 @@ class MtblsIsaTests(unittest.TestCase):
         args = ['mtbls-get-study-archive', '--format', fmt, _STUDY, rand_name]
         archive_name = "{}.{}".format(rand_name, fmt)
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self.assertTrue(os.path.exists(archive_name))
         finally:
             self._clean_output(archive_name)
@@ -151,13 +151,13 @@ class IsaSlicerTests(unittest.TestCase):
     def _make_tmp_name(self):
         return os.path.join(
             tempfile.gettempdir(),
-            "run_mtblisa_test.{:05d}".format(random.randrange(10000)))
+            "isaslicer_test.{:05d}".format(random.randrange(10000)))
 
     def test_isatab_get_factors(self):
         rand_name = self._make_tmp_name()
         args = ['isa-tab-get-factors', self._STUDY_PATH, rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -166,7 +166,7 @@ class IsaSlicerTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['isa-tab-get-factor-values', self._STUDY_PATH, "Gender", rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -175,7 +175,7 @@ class IsaSlicerTests(unittest.TestCase):
         rand_name = self._make_tmp_name()
         args = ['isa-tab-get-factors-summary', self._STUDY_PATH, rand_name]
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -185,7 +185,7 @@ class IsaSlicerTests(unittest.TestCase):
         args = ['isa-tab-get-data-list', self._STUDY_PATH, rand_name, '--json-query',
                 '{"Gender":"Male"}']
         try:
-            run_mtblisa.main(args)
+            isaslicer.main(args)
             self._assert_not_empty_json_data(rand_name)
         finally:
             self._clean_output(rand_name)
@@ -196,7 +196,7 @@ class IsaSlicerTests(unittest.TestCase):
     #     args = ['isa-tab-get-data-collection', self._STUDY_PATH, rand_name, '--json-query',
     #             '{"Gender":"Male"}']
     #     try:
-    #         run_mtblisa.main(args)
+    #         isaslicer.main(args)
     #         self._assert_not_empty_folder(rand_name)
     #     finally:
     #         self._clean_output(rand_name)
