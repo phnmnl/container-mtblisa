@@ -1,11 +1,11 @@
-FROM isatools/isatools:3.6-alpine-0.9.5
+FROM isatools/isatools:3.6-alpine-0.10-develop
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
 LABEL software.version="0.9.5"
-LABEL version="0.7.3"
-LABEL software="mtblisa"
+LABEL version="0.7.5"
+LABEL software="isaslicer"
 
 WORKDIR /mtblisa
 
@@ -19,10 +19,10 @@ ENV PATH=$PATH:/files/galaxy
 
 ADD run_test.sh /usr/local/bin/run_test.sh
 ADD run_tests.py /usr/local/bin/run_tests.py
-RUN cp /files/galaxy/tools/slicer/isaslicer.py /usr/local/bin/isaslicer.py
+RUN cp /files/galaxy/tools/isaslicer/isaslicer.py /usr/local/bin/isaslicer.py
 RUN chmod a+rx \
   /usr/local/bin/isaslicer.py \
   /usr/local/bin/run_test.sh \
   /usr/local/bin/run_tests.py
 
-ENTRYPOINT ["run_mtblisa.py"]
+ENTRYPOINT ["isaslicer.py"]

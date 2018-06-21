@@ -124,7 +124,7 @@ def parse_args(args):
 
 class IsaSlicerTests(unittest.TestCase):
 
-    _STUDY_PATH = "/files/galaxy/tools/slicer/test-data/MTBLS1/"
+    _STUDY_PATH = "/files/galaxy/tools/isaslicer/test-data/MTBLS1/"
 
     def _assert_not_empty_folder(self, result):
         self.assertIsNotNone(result, "Empty output path")
@@ -190,7 +190,7 @@ class IsaSlicerTests(unittest.TestCase):
         finally:
             self._clean_output(rand_name)
 
-    # Commented out until figure out how to use input data collection
+    # test needs input of all data files (raw and supplementary)
     # def test_isatab_get_data_files_collection_with_queries(self):
     #     rand_name = self._make_tmp_name()
     #     args = ['isa-tab-get-data-collection', self._STUDY_PATH, rand_name, '--json-query',
