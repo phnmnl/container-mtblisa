@@ -4,7 +4,7 @@ MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
 LABEL software.version="0.10.0"
-LABEL version="0.7.7"
+LABEL version="0.7.8"
 LABEL software="isaslicer"
 
 WORKDIR /mtblisa
