@@ -3,7 +3,7 @@ FROM isatools/isatools:3.6-alpine-0.10-develop
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
-LABEL software.version="0.9.5"
+LABEL software.version="0.10-develop"
 LABEL version="0.7.5"
 LABEL software="isaslicer"
 
