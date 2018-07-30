@@ -1,10 +1,11 @@
-FROM isatools/isatools:3.6-alpine-0.10.0
+FROM isatools/isatools:3.6-alpine-0.10.2
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 LABEL Description="Tools to query MetaboLights ISA-Tab"
-LABEL software.version="0.10.0"
-LABEL version="0.7.10"
+LABEL software.version="0.10.2"
+
+LABEL version="0.7.12"
 LABEL software="isaslicer"
 
 WORKDIR /mtblisa
